@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ChatServer.Netty;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,9 +13,24 @@ namespace ChatServer
 {
     public partial class Form1 : Form
     {
+        NettyServer server;
         public Form1()
         {
             InitializeComponent();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            server = new NettyServer();
+            server.Start();
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (server.Running)
+            {
+                server.Stop();
+            }
         }
     }
 }
